@@ -1,0 +1,69 @@
+info:
+  name: Update Paciente no accessToken
+  type: http
+  seq: 4
+
+http:
+  method: PUT
+  url: "{{BASE_URL}}/pacientes/{{pacienteId}}"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "{{$randomFullName}}",
+        "document": "{{randomCpf}}"
+      }
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "400"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/pacientes/{{pacienteId}}"
+      method: PUT
+      body:
+        type: json
+        data: |-
+          {
+            "name": "{{$randomFullName}}",
+            "document": "{{randomCpf}}"
+          }
+    response:
+      status: 401
+      statusText: Unauthorized
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "1940"
+        - name: etag
+          value: W/"794-FkgIy69H9rhQJxQ1UjfGWceWH9I"
+        - name: date
+          value: Sat, 21 Feb 2026 14:12:28 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: json
+        data: |-
+          {
+            "statusCode": 401,
+            "message": "Unauthorized",
+            "stark": "UnauthorizedException: Unauthorized\n    at JwtAuthGuard.handleRequest (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/passport/dist/auth.guard.js:60:30)\n    at /media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/passport/dist/auth.guard.js:44:124\n    at /media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/passport/dist/auth.guard.js:83:24\n    at allFailed (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/passport/lib/middleware/authenticate.js:110:18)\n    at attempt (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/passport/lib/middleware/authenticate.js:183:28)\n    at strategy.fail (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/passport/lib/middleware/authenticate.js:314:9)\n    at JwtStrategy.authenticate (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/passport-jwt/lib/strategy.js:96:21)\n    at attempt (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/passport/lib/middleware/authenticate.js:378:16)\n    at authenticate (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/passport/lib/middleware/authenticate.js:379:7)\n    at /media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/passport/dist/auth.guard.js:88:3",
+            "url": "/pacientes/5deb5c37-8dfd-4e4e-83ae-97d225dcc506"
+          }

@@ -1,0 +1,92 @@
+info:
+  name: empty required field document
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{BASE_URL}}/pacientes/"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "{{$randomFullName}}"
+        //"document": "{{randomCpf}}"
+      }
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        // Obtém a data atual no formato ISO (YYYY-MM-DD)
+        const currentDate = new Date().toISOString().split('T')[0];
+
+        // Define uma variável chamada 'dataHoje' que pode ser usada na requisição
+        bru.setVar("currentDate", currentDate);
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "400"
+  actions:
+    - type: set-variable
+      phase: after-response
+      selector:
+        expression: res.body.id
+        method: jsonq
+      variable:
+        name: pacienteId
+        scope: runtime
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/pacientes/"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "name": "{{$randomFullName}}"
+            //"document": "{{randomCpf}}"
+          }
+    response:
+      status: 400
+      statusText: Bad Request
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "1268"
+        - name: etag
+          value: W/"4f4-t1FmlJhtdej7AO1Qr2DPG8NXk1A"
+        - name: date
+          value: Sat, 21 Feb 2026 13:52:12 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: json
+        data: |-
+          {
+            "statusCode": 400,
+            "message": [
+              "document should not be empty",
+              "document must be a string"
+            ],
+            "stark": "BadRequestException: Bad Request Exception\n    at ValidationPipe.exceptionFactory (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/common/pipes/validation.pipe.js:101:20)\n    at ValidationPipe.transform (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/common/pipes/validation.pipe.js:74:30)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async resolveParamValue (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/core/router/router-execution-context.js:148:23)\n    at async Promise.all (index 0)\n    at async pipesFn (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/core/router/router-execution-context.js:151:13)\n    at async /media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/core/router/router-execution-context.js:37:30",
+            "url": "/pacientes/"
+          }

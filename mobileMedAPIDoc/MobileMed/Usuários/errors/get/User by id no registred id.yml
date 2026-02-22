@@ -1,0 +1,59 @@
+info:
+  name: User by id no registred id
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: "{{BASE_URL}}/user-system/{{$randomUUID}}"
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "404"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/user-system/{{$randomUUID}}"
+      method: GET
+    response:
+      status: 404
+      statusText: Not Found
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "227"
+        - name: etag
+          value: W/"e3-ecWlGrPixy65PM9gzBSxnelYksw"
+        - name: date
+          value: Sat, 21 Feb 2026 15:14:52 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: json
+        data: |-
+          {
+            "statusCode": 404,
+            "message": "UserSystem not found",
+            "data": null,
+            "occurrenceData": "Sat Feb 21 2026 12:14:52 GMT-0300 (Horário Padrão de Brasília)",
+            "url": "http://localhost:3000/user-system/aafc5fe3-6cad-42a8-9721-80d5186ecf83"
+          }

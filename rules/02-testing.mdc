@@ -1,0 +1,35 @@
+---
+description: Testing standards for this Playwright project
+alwaysApply: true
+---
+
+# Scope
+Applies to all tests in `tests/`, especially API tests in `tests/api/`.
+
+## Test structure
+- Every test file starts with `test.describe()` representing the endpoint or feature.
+- `describe` name must include the HTTP method and full route.
+- Each `test()` validates a single behavior.
+- Test names are in English and must start with `Should ...`.
+
+## Independence and data hygiene
+- No test depends on another.
+- Avoid shared global state across tests.
+- Clean data before creating new records.
+- If a test creates data, it cleans up when needed.
+- Use a dedicated test database.
+
+## Auth setup
+- Current setup lives at `tests/auth.setup.ts`.
+- Admin storageState is saved to `.auth/cookies.admin.json`.
+- Use it in tests via:
+  - `test.use({ storageState: './.auth/cookies.admin.json' })`
+- `.auth/` must not be committed.
+
+## Future module setup pattern
+When new modules are introduced:
+- Register module name in `shared/repository/modules.list.ts`.
+- Module name must match `modules/<module>/` folder name.
+- Setup file must be `tests/setup/<module>.setup.ts`.
+- StorageState must be `.auth/cookies.<module>.json`.
+

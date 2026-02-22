@@ -1,0 +1,82 @@
+---
+description: Code structure - explicit flow, minimal indentation, low cyclomatic complexity
+alwaysApply: true
+---
+
+# Goal
+Code must be readable from top to bottom as an execution script.
+Priority: minimize indentation, reduce cyclomatic complexity, make the execution flow explicit.
+Secondary and additional functions should be placed below the main flow.
+
+# Hard rules
+
+## 1) Minimize indentation
+- Prefer early returns and guard clauses.
+- Unhappy paths must appear at the top of the function or method.
+- The happy path must stay linear, with minimal nesting.
+
+### Do
+- Validate preconditions and return early.
+- Execute the main flow sequentially.
+- Use `if` for validation to avoid multiple try/catch blocks.
+- Extract loop statements into functions.
+- Extract switch statements into functions.
+
+### Avoid
+- Nested `if` statements.
+- Loop statements in the main flow.
+- Switch statements in the main flow.
+
+## 2) Do not use `else`
+Reason: `else` means anything not covered by the if condition, which hides intent and increases indentation.
+
+### Do
+- `if (invalidCondition) return`
+- `if (validCondition) { ...; return }`
+- Continue the main flow without `else`
+
+### Avoid
+- `if (...) { ... } else { ... }`
+
+## 3) Do not use ternary operators
+Reason: ternary expressions favor compactness over clarity and hide execution intent.
+
+### Avoid
+- `condition ? valueA : valueB`
+- Nested or chained ternaries
+- Ternaries inside assignments, returns, or arguments
+
+### Prefer
+- Explicit `if` statements
+- Intention-revealing variables
+- Early returns when branching is required
+
+## 4) Use blank lines only to separate logical blocks
+Blank lines indicate a change in intention, not visual spacing.
+
+Model:
+- Preparation and validation block
+- (blank line)
+- Execution block
+- (blank line)
+- Completion and return block
+
+## 5) Use try/catch only when not able to handle or verify the exception
+- Prefer a single try/catch on the main flow.
+- Use `if` statements to handle known exceptions.
+
+## 6) Extract complex expressions into intention-revealing variables
+- Any condition with multiple operators must be extracted into a named variable.
+- Boolean variables must be affirmative, specific, and semantic.
+
+Example:
+```ts
+const isDoorOpenBeyondOperationTime =
+  proximitySensorReading === false &&
+  lightSensor > 100 &&
+  currentTime >= startConvertedTime &&
+  currentTime <= endConvertedTime;
+
+if (isDoorOpenBeyondOperationTime) doSomething();
+```
+

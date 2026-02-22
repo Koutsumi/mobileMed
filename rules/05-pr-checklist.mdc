@@ -1,0 +1,12 @@
+---
+description: PR checklist
+alwaysApply: true
+---
+
+# Checklist
+- Tests follow `Should ...` naming and single-responsibility rules.
+- No test depends on another test.
+- Data cleanup is included where needed.
+- No secrets or `.auth/` files are committed.
+- Docs updated if behavior changes or discrepancies were found.
+

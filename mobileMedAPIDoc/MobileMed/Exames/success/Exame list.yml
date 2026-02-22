@@ -1,0 +1,86 @@
+info:
+  name: Exame list
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{BASE_URL}}/exames"
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/exames"
+      method: GET
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "802"
+        - name: etag
+          value: W/"322-LU4i3TWzDGn039ARCfs2Unj6jOE"
+        - name: date
+          value: Sat, 21 Feb 2026 13:14:47 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: json
+        data: |-
+          {
+            "statusCode": 200,
+            "message": "Exams fetched successfully",
+            "data": [
+              {
+                "id": "d07b7bce-8ca5-451a-bafb-458ce2d6c99f",
+                "modality": "CT",
+                "idempotencyKey": "8aa0692e-b572-4d08-bf23-27bf051e1f68",
+                "patientId": "4c4c8db1-04b9-41a7-8ad6-91e1ebeb5ecb",
+                "patient": {
+                  "id": "4c4c8db1-04b9-41a7-8ad6-91e1ebeb5ecb",
+                  "name": "Mae Armstrong",
+                  "document": "22944096982",
+                  "exams": [],
+                  "createdAt": "2026-02-21T13:06:11.853Z",
+                  "createdBy": "Samuel Bertoni",
+                  "updatedAt": "2026-02-21T13:06:11.853Z",
+                  "updatedBy": "Samuel Bertoni"
+                },
+                "createdAt": "2026-02-21T13:10:55.069Z",
+                "createdBy": "System",
+                "updatedAt": "2026-02-21T13:10:55.069Z",
+                "updatedBy": "System"
+              }
+            ],
+            "occurrenceData": "Sat Feb 21 2026 10:14:47 GMT-0300 (Horário Padrão de Brasília)",
+            "url": "http://localhost:3000/exames",
+            "pagination": {
+              "totalItems": 1,
+              "totalPages": 1,
+              "currentPage": 1,
+              "pageSize": 1
+            }
+          }

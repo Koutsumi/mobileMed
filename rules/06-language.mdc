@@ -1,0 +1,34 @@
+---
+description: Enforces American English as the standard language for all source code
+alwaysApply: true
+---
+
+# Goal
+All source code must be in American English.
+
+## Scope
+Applies to:
+- Variables
+- Functions
+- Classes
+- Files and folders
+- Tests
+- Technical comments
+
+## Do
+- Use standard computing terminology.
+- Reuse naming patterns already established in the repository.
+- Keep code locale-agnostic (dates, numbers, timezones, formatting).
+
+## Do not
+- Mix languages in identifiers.
+- Use accents or special characters in identifiers.
+- Translate technical concepts literally when it degrades meaning.
+
+## Exceptions
+Portuguese terms are allowed only for official Brazilian legal or regulatory concepts.
+When used:
+- Keep the term fully in Portuguese.
+- Isolate it in domain-specific modules.
+- Add an English comment explaining the term and why it cannot be translated.
+

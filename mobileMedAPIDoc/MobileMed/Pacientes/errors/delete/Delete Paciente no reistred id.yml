@@ -1,0 +1,23 @@
+info:
+  name: Delete Paciente no reistred id
+  type: http
+  seq: 2
+
+http:
+  method: DELETE
+  url: "{{BASE_URL}}/pacientes/{{$randomUUID}}"
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "404"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

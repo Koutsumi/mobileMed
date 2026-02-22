@@ -1,0 +1,107 @@
+info:
+  name: Login
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{BASE_URL}}/auth/login"
+  body:
+    type: json
+    data: |-
+      {
+        "email": "{{email}}",
+        "password": "{{passsword}}"
+      }
+  auth: inherit
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.statusCode
+      operator: eq
+      value: "200"
+    - expression: res.body.message
+      operator: eq
+      value: UserSystem found
+    - expression: res.body.data.userId
+      operator: isNotEmpty
+    - expression: res.body.data.userName
+      operator: eq
+      value: "{{userName}}"
+    - expression: res.body.data.userEmail
+      operator: eq
+      value: "{{email}}"
+    - expression: res.body.data.expiresIn
+      operator: eq
+      value: "86400"
+    - expression: res.body.data.accessToken
+      operator: isNotEmpty
+    - expression: res.body.url
+      operator: eq
+      value: /auth/login/{{email}}
+  actions:
+    - type: set-variable
+      phase: after-response
+      selector:
+        expression: res.body.data.accessToken
+        method: jsonq
+      variable:
+        name: accessToken
+        scope: runtime
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/auth/login"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "email": "{{email}}",
+            "password": "{{passsword}}"
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "480"
+        - name: etag
+          value: W/"1e0-Q6QT4DLLK8FPn2C/Y3haxI1W7k4"
+        - name: date
+          value: Sat, 21 Feb 2026 12:33:40 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: json
+        data: |-
+          {
+            "statusCode": 200,
+            "message": "UserSystem found",
+            "data": {
+              "userId": "9df17fbb-b518-48a4-9bd6-09640ed14c28",
+              "userName": "Samuel Bertoni",
+              "userEmail": "adm@gmail.com",
+              "expiresIn": 86400,
+              "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjlkZjE3ZmJiLWI1MTgtNDhhNC05YmQ2LTA5NjQwZWQxNGMyOCIsIm5hbWUiOiJTYW11ZWwgQmVydG9uaSIsImVtYWlsIjoiYWRtQGdtYWlsLmNvbSIsImlhdCI6MTc3MTY3NzIyMCwiZXhwIjoxNzcxNzYzNjIwfQ.ez917xIKg-JcTe4T9aQBbrI3W4mJn5itfAaIRFuXFBQ"
+            },
+            "url": "/auth/login/adm@gmail.com"
+          }

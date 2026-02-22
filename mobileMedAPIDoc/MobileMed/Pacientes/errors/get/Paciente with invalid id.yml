@@ -1,0 +1,58 @@
+info:
+  name: Paciente with invalid id
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{BASE_URL}}/pacientes/{{$randomUUID}}"
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "404"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/pacientes/{{$randomUUID}}"
+      method: GET
+    response:
+      status: 500
+      statusText: Internal Server Error
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "2061"
+        - name: etag
+          value: W/"80d-UwVKoJzC3f2TRFIy+Pjcgg7ljJk"
+        - name: date
+          value: Sat, 21 Feb 2026 13:59:07 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: json
+        data: |-
+          {
+            "statusCode": 500,
+            "message": "syntax error at or near \":\"",
+            "stark": "QueryFailedError: syntax error at or near \":\"\n    at PostgresQueryRunner.query (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async SelectQueryBuilder.loadRawResults (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3863:25)\n    at async SelectQueryBuilder.executeEntitiesAndRawResults (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3609:26)\n    at async SelectQueryBuilder.getRawAndEntities (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)\n    at async SelectQueryBuilder.getOne (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)\n    at async PatientRepository.findOne (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/src/infrastructure/database/patient/repositories/patient.repository.ts:21:18)\n    at async PatientService.findOne (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/src/application/patient/services/patient.service.ts:20:20)\n    at async PatientController.findOne (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/src/presentation/patients/controllers/patient.controller.ts:52:12)",
+            "url": "/pacientes/83e53c0f-3f5f-45bd-85a9-64fb1eccb8bb"
+          }

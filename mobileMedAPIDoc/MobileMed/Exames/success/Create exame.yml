@@ -1,0 +1,74 @@
+info:
+  name: Create exame
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{BASE_URL}}/exames/"
+  body:
+    type: json
+    data: |-
+      {
+        "patientId": "{{pacienteId}}",
+        "modality": "CT",
+        //"requestedAt": "{{currentDate}}",
+        "idempotencyKey": "{{$randomUUID}}"
+      }
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        const currentDate = new Date();
+
+        bru.setVar("currentDate", currentDate);
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "201"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/exames/"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "patientId": "{{pacienteId}}",
+            "modality": "CT",
+            "requestedAt": "{{currentDate}}",
+            "idempotencyKey": "{{$randomUUID}}"
+          }
+    response:
+      status: 201
+      statusText: Created
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: date
+          value: Sat, 21 Feb 2026 13:04:12 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+        - name: content-length
+          value: "0"
+      body:
+        type: text
+        data: ""
+
+docs: Retorna 201 mas não cria o exame no banco de dados

@@ -1,0 +1,141 @@
+info:
+  name: Paciente list
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{BASE_URL}}/pacientes"
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/pacientes"
+      method: GET
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "2265"
+        - name: etag
+          value: W/"8d9-whDdMy0n+NE8sbVQ077+q0akzJA"
+        - name: date
+          value: Sat, 21 Feb 2026 13:16:38 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: json
+        data: |-
+          {
+            "statusCode": 200,
+            "message": "Patient fetched successfully",
+            "data": [
+              {
+                "id": "9d1e25b6-f352-76e9-5311-d63b35a6f351",
+                "name": "Samuel Bertoni",
+                "document": "00000000000",
+                "exams": [],
+                "createdAt": "2026-02-19T18:11:01.478Z",
+                "createdBy": "System",
+                "updatedAt": "2026-02-19T18:11:01.485Z",
+                "updatedBy": "Seeder"
+              },
+              {
+                "id": "a2ac1b19-7192-42a1-a762-ea0857465235",
+                "name": "Melissa Reis",
+                "document": "23036707212",
+                "exams": [],
+                "createdAt": "2026-02-21T00:59:44.578Z",
+                "createdBy": "Srta. Isaac Moraes API",
+                "updatedAt": "2026-02-21T00:59:44.578Z",
+                "updatedBy": "Srta. Isaac Moraes API"
+              },
+              {
+                "id": "38bcfd72-bfbb-4f4f-9413-9306a185a251",
+                "name": "Sr. Mario Macedo",
+                "document": "92297143990",
+                "exams": [],
+                "createdAt": "2026-02-21T00:59:44.582Z",
+                "createdBy": "Srta. Isaac Moraes API",
+                "updatedAt": "2026-02-21T12:52:50.303Z",
+                "updatedBy": "Samuel Bertoni"
+              },
+              {
+                "id": "30ac5cd6-42b8-4b45-b870-ceff5a23ad8f",
+                "name": "Elena Powlowski-Johnson",
+                "document": "33622670681",
+                "exams": [],
+                "createdAt": "2026-02-21T12:54:49.677Z",
+                "createdBy": "Samuel Bertoni",
+                "updatedAt": "2026-02-21T12:54:49.677Z",
+                "updatedBy": "Samuel Bertoni"
+              },
+              {
+                "id": "f438a1e8-deb1-4ca1-83c3-5158b3621030",
+                "name": "Jasmine Larson",
+                "document": "38383639309",
+                "exams": [],
+                "createdAt": "2026-02-21T12:55:25.260Z",
+                "createdBy": "Samuel Bertoni",
+                "updatedAt": "2026-02-21T12:55:25.260Z",
+                "updatedBy": "Samuel Bertoni"
+              },
+              {
+                "id": "4c4c8db1-04b9-41a7-8ad6-91e1ebeb5ecb",
+                "name": "Mae Armstrong",
+                "document": "22944096982",
+                "exams": [
+                  {
+                    "id": "d07b7bce-8ca5-451a-bafb-458ce2d6c99f",
+                    "modality": "CT",
+                    "idempotencyKey": "8aa0692e-b572-4d08-bf23-27bf051e1f68",
+                    "patientId": "4c4c8db1-04b9-41a7-8ad6-91e1ebeb5ecb",
+                    "createdAt": "2026-02-21T13:10:55.069Z",
+                    "createdBy": "System",
+                    "updatedAt": "2026-02-21T13:10:55.069Z",
+                    "updatedBy": "System"
+                  }
+                ],
+                "createdAt": "2026-02-21T13:06:11.853Z",
+                "createdBy": "Samuel Bertoni",
+                "updatedAt": "2026-02-21T13:06:11.853Z",
+                "updatedBy": "Samuel Bertoni"
+              },
+              {
+                "id": "489b27c4-27d8-4f0d-abd1-58f1bcec5526",
+                "name": "Novo paciente",
+                "document": "39288928863",
+                "exams": [],
+                "createdAt": "2026-02-21T13:07:51.635Z",
+                "createdBy": "Samuel Bertoni",
+                "updatedAt": "2026-02-21T13:07:51.635Z",
+                "updatedBy": "Samuel Bertoni"
+              }
+            ],
+            "occurrenceData": "Sat Feb 21 2026 10:16:38 GMT-0300 (Horário Padrão de Brasília)",
+            "url": "http://localhost:3000/pacientes",
+            "pagination": {
+              "totalItems": 7,
+              "totalPages": 1,
+              "currentPage": 1,
+              "pageSize": 10
+            }
+          }

@@ -1,0 +1,84 @@
+info:
+  name: Create exame with invalid modality
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{BASE_URL}}/exames/"
+  body:
+    type: json
+    data: |-
+      {
+        "patientId": "{{pacienteId}}",
+        "modality": "AB",
+        //"requestedAt": "{{currentDate}}",
+        "idempotencyKey": "{{$randomUUID}}"
+      }
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        const currentDate = new Date();
+
+        bru.setVar("currentDate", currentDate);
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "400"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/exames/"
+      method: POST
+      body:
+        type: json
+        data: |-
+          {
+            "patientId": "{{pacienteId}}",
+            "modality": "AB",
+            //"requestedAt": "{{currentDate}}",
+            "idempotencyKey": "{{$randomUUID}}"
+          }
+    response:
+      status: 400
+      statusText: Bad Request
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "1297"
+        - name: etag
+          value: W/"511-ZMt4tyWKRnTalHThgx0NsyYIVws"
+        - name: date
+          value: Sat, 21 Feb 2026 14:37:02 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: json
+        data: |-
+          {
+            "statusCode": 400,
+            "message": [
+              "modality must be one of the following values: CR, CT, DX, MG, MR, NM, OT, PT, RF, US, XA"
+            ],
+            "stark": "BadRequestException: Bad Request Exception\n    at ValidationPipe.exceptionFactory (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/common/pipes/validation.pipe.js:101:20)\n    at ValidationPipe.transform (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/common/pipes/validation.pipe.js:74:30)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async resolveParamValue (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/core/router/router-execution-context.js:148:23)\n    at async Promise.all (index 0)\n    at async pipesFn (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/core/router/router-execution-context.js:151:13)\n    at async /media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/core/router/router-execution-context.js:37:30",
+            "url": "/exames/"
+          }

@@ -1,0 +1,62 @@
+info:
+  name: User by id
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{BASE_URL}}/user-system/{{userId}}"
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/user-system/{{userId}}"
+      method: GET
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "443"
+        - name: etag
+          value: W/"1bb-SRFcFbhCCXQyPFh4TllGf2BJa4U"
+        - name: date
+          value: Sat, 21 Feb 2026 13:38:24 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: json
+        data: |-
+          {
+            "statusCode": 200,
+            "message": "UserSystem found",
+            "data": {
+              "id": "9df17fbb-b518-48a4-9bd6-09640ed14c28",
+              "name": "Samuel Bertoni",
+              "email": "adm@gmail.com",
+              "status": 1,
+              "createdAt": "2026-02-19T18:11:01.493Z",
+              "createdBy": "System",
+              "updatedAt": "2026-02-19T18:11:01.537Z",
+              "updatedBy": "Seeder"
+            },
+            "occurrenceData": "Sat Feb 21 2026 10:38:24 GMT-0300 (Horário Padrão de Brasília)",
+            "url": "http://localhost:3000/user-system/9df17fbb-b518-48a4-9bd6-09640ed14c28"
+          }

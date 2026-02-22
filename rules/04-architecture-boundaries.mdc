@@ -1,0 +1,17 @@
+---
+description: Architecture and boundaries
+alwaysApply: true
+---
+
+# Boundaries
+- `modules/` contains domain-specific API logic and helpers.
+- `shared/` contains global helpers and cross-cutting utilities.
+- `fixtures/` contains static test data and mocks.
+- `tests/` contains test suites and setup scripts.
+
+# Rules
+- Keep domain-specific logic inside its module.
+- Use `shared/` only for cross-module helpers.
+- Global helpers must be pure, reusable, and typed.
+- Avoid duplicating helper logic across modules.
+

@@ -1,0 +1,46 @@
+info:
+  name: Delete exame by id
+  type: http
+  seq: 1
+
+http:
+  method: DELETE
+  url: "{{BASE_URL}}/exames/{{exameId}}"
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "204"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/exames/{{exameId}}"
+      method: DELETE
+    response:
+      status: 204
+      statusText: No Content
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: date
+          value: Sat, 21 Feb 2026 12:48:16 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: text
+        data: ""

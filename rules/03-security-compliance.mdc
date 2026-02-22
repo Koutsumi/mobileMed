@@ -1,0 +1,16 @@
+---
+description: Security, privacy, and compliance guidance
+alwaysApply: true
+---
+
+# Security and privacy
+- Never commit `.auth/` or secrets.
+- Do not log sensitive data (tokens, passwords, personal identifiers).
+- Use `.env` for secrets and keep it local.
+- Prefer minimal test data and clean up after use.
+
+# Compliance and reliability
+- Raise concerns about data privacy, security, and reliability risks.
+- Avoid using production data in tests.
+- Ensure test databases are isolated from real environments.
+

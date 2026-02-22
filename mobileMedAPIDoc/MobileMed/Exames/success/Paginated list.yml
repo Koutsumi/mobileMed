@@ -1,0 +1,109 @@
+info:
+  name: Paginated list
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{BASE_URL}}/exames/paginated?page=1&pageSize=10"
+  params:
+    - name: page
+      value: "1"
+      type: query
+    - name: pageSize
+      value: "10"
+      type: query
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+  actions:
+    - type: set-variable
+      phase: after-response
+      selector:
+        expression: res.body.data[0].id
+        method: jsonq
+      variable:
+        name: exameId
+        scope: runtime
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/exames/paginated?page=1&pageSize=10"
+      method: GET
+      params:
+        - name: page
+          value: "1"
+          type: query
+        - name: pageSize
+          value: "10"
+          type: query
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "800"
+        - name: etag
+          value: W/"320-QO0j0Sml93n8J7T9H+zvwfxikgQ"
+        - name: date
+          value: Sat, 21 Feb 2026 12:34:59 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: json
+        data: |-
+          {
+            "statusCode": 200,
+            "message": "Exams fetched successfully",
+            "data": [
+              {
+                "id": "b4a656d4-5381-48b6-8fae-5638159a17fc",
+                "modality": "CT",
+                "idempotencyKey": "exam-2025-09-08-001",
+                "patientId": "9d1e25b6-f352-76e9-5311-d63b35a6f351",
+                "patient": {
+                  "id": "9d1e25b6-f352-76e9-5311-d63b35a6f351",
+                  "name": "Samuel Bertoni",
+                  "document": "00000000000",
+                  "exams": [],
+                  "createdAt": "2026-02-19T18:11:01.478Z",
+                  "createdBy": "System",
+                  "updatedAt": "2026-02-19T18:11:01.485Z",
+                  "updatedBy": "Seeder"
+                },
+                "createdAt": "2026-02-19T18:11:01.490Z",
+                "createdBy": "System",
+                "updatedAt": "2026-02-19T18:11:01.491Z",
+                "updatedBy": "Seeder"
+              }
+            ],
+            "occurrenceData": "Sat Feb 21 2026 09:34:59 GMT-0300 (Horário Padrão de Brasília)",
+            "url": "http://localhost:3000/exames/paginated?page=1&pageSize=10",
+            "pagination": {
+              "totalItems": 1,
+              "totalPages": 1,
+              "currentPage": 1,
+              "pageSize": 10
+            }
+          }

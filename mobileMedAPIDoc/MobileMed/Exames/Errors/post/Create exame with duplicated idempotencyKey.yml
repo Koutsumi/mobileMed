@@ -1,0 +1,40 @@
+info:
+  name: Create exame with duplicated idempotencyKey
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: "{{BASE_URL}}/exames/"
+  body:
+    type: json
+    data: |-
+      {
+        "patientId": "{{pacienteId}}",
+        "modality": "CT",
+        //"requestedAt": "{{currentDate}}",
+        "idempotencyKey": "8aa0692e-b572-4d08-bf23-27bf051e1f68"
+      }
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        const currentDate = new Date();
+
+        bru.setVar("currentDate", currentDate);
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "400"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+docs: Retorna 201 mas não cria o exame

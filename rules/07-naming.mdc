@@ -1,0 +1,39 @@
+---
+description: Enforces semantic naming, intent-revealing and consistent domain language
+alwaysApply: true
+---
+
+# Goal
+Enforce semantic clarity, domain consistency, and long-term readability.
+
+## R1 - Consistency beats preference
+- Use the same term for the same concept everywhere.
+- Do not introduce synonyms for an existing concept.
+- Align with the most used term in the codebase.
+
+## R2 - Names must encode intent, not just context
+- A name must explain why the element exists.
+- Avoid generic identifiers such as `data`, `info`, `tmp`, `value`, `result`, `item`, `object`, `thing`.
+
+## R3 - Domain language is mandatory
+- Public identifiers must use ubiquitous domain language.
+- For new domain concepts, propose multiple names and pick the closest to existing terminology.
+
+## R4 - No encoded metadata in names
+- Do not encode type or structure in names.
+- Exceptions only when metadata is the domain concept (`uuid`, `sha256`).
+
+## R5 - Avoid artificial differentiation
+- Avoid numbers or vague qualifiers like `new`, `old`, `temp`, `final`.
+
+## R6 - Scope drives name precision
+- Wider scope requires more explicit names.
+- Short-lived locals may be shorter but not generic.
+
+## R7 - Behavior must be visible in method names
+- Method names must reflect side effects, I/O, persistence, or destructive behavior.
+
+## R8 - Comments do not fix bad names
+- Comments explain why, not what.
+- If a comment explains what the code does, rename the identifier.
+

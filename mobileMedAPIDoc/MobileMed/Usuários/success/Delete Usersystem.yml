@@ -1,0 +1,40 @@
+info:
+  name: Delete Usersystem
+  type: http
+  seq: 1
+
+http:
+  method: DELETE
+  url: "{{BASE_URL}}/user-system/{{otherUserId}}"
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/user-system/{{otherUserId}}"
+      method: DELETE
+    response:
+      status: 204
+      statusText: No Content
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: date
+          value: Sat, 21 Feb 2026 13:45:24 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: text
+        data: ""

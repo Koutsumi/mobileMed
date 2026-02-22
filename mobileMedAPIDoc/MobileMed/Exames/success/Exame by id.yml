@@ -1,0 +1,58 @@
+info:
+  name: Exame by id
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{BASE_URL}}/exames/{{exameId}}"
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/exames/{{exameId}}"
+      method: GET
+    response:
+      status: 500
+      statusText: Internal Server Error
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "2031"
+        - name: etag
+          value: W/"7ef-6VfDCHXBeUYR3SXRicwz9J0Sab0"
+        - name: date
+          value: Sat, 21 Feb 2026 12:42:53 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: json
+        data: |-
+          {
+            "statusCode": 500,
+            "message": "syntax error at or near \":\"",
+            "stark": "QueryFailedError: syntax error at or near \":\"\n    at PostgresQueryRunner.query (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async SelectQueryBuilder.loadRawResults (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3863:25)\n    at async SelectQueryBuilder.executeEntitiesAndRawResults (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3609:26)\n    at async SelectQueryBuilder.getRawAndEntities (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)\n    at async SelectQueryBuilder.getOne (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)\n    at async ExamRepository.findOne (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/src/infrastructure/database/exam/repositories/exam.repository.ts:21:18)\n    at async ExamService.findOne (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/src/application/exam/services/exam.service.ts:18:20)\n    at async ExamController.findOne (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/src/presentation/exams/controllers/exam.controller.ts:52:12)",
+            "url": "/exames/b4a656d4-5381-48b6-8fae-5638159a17fc"
+          }

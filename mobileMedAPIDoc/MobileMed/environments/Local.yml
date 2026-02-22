@@ -1,0 +1,12 @@
+name: Local
+variables:
+  - name: BASE_URL
+    value: http://localhost:3000
+  - name: email
+    value: adm@gmail.com
+  - secret: true
+    name: passsword
+  - name: userName
+    value: Samuel Bertoni
+  - name: userId
+    value: 9df17fbb-b518-48a4-9bd6-09640ed14c28

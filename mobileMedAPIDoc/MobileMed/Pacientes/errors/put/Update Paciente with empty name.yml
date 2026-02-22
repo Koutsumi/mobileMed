@@ -1,0 +1,75 @@
+info:
+  name: Update Paciente with empty name
+  type: http
+  seq: 1
+
+http:
+  method: PUT
+  url: "{{BASE_URL}}/pacientes/{{pacienteId}}"
+  body:
+    type: json
+    data: |-
+      {
+        //"name": "{{$randomFullName}}",
+        "document": "{{randomCpf}}"
+      }
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "400"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/pacientes/{{pacienteId}}"
+      method: PUT
+      body:
+        type: json
+        data: |-
+          {
+            //"name": "{{$randomFullName}}",
+            "document": "{{randomCpf}}"
+          }
+    response:
+      status: 400
+      statusText: Bad Request
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "1296"
+        - name: etag
+          value: W/"510-f10pPaebZZRh/oUmymkftnedhrA"
+        - name: date
+          value: Sat, 21 Feb 2026 14:10:13 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: json
+        data: |-
+          {
+            "statusCode": 400,
+            "message": [
+              "name should not be empty",
+              "name must be a string"
+            ],
+            "stark": "BadRequestException: Bad Request Exception\n    at ValidationPipe.exceptionFactory (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/common/pipes/validation.pipe.js:101:20)\n    at ValidationPipe.transform (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/common/pipes/validation.pipe.js:74:30)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async resolveParamValue (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/core/router/router-execution-context.js:148:23)\n    at async Promise.all (index 0)\n    at async pipesFn (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/core/router/router-execution-context.js:151:13)\n    at async /media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/core/router/router-execution-context.js:37:30",
+            "url": "/pacientes/5deb5c37-8dfd-4e4e-83ae-97d225dcc506"
+          }

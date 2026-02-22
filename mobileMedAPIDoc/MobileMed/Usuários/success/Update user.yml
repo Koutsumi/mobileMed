@@ -1,0 +1,78 @@
+info:
+  name: Update user
+  type: http
+  seq: 1
+
+http:
+  method: PUT
+  url: "{{BASE_URL}}/user-system/{{otherUserId}}"
+  body:
+    type: json
+    data: |-
+      {
+        "id": "{{otherUserId}}",
+        "name": "{{$randomFullName}}",
+        "email": "{{$randomEmail}}",
+        "password": "test@123",
+        "status": 1
+      }
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/user-system/{{otherUserId}}"
+      method: PUT
+      body:
+        type: json
+        data: |-
+          {
+            "id": "{{otherUserId}}",
+            "name": "{{$randomFullName}}",
+            "email": "{{$randomEmail}}",
+            "password": "test@123",
+            "status": 1
+          }
+    response:
+      status: 500
+      statusText: Internal Server Error
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "1242"
+        - name: etag
+          value: W/"4da-w3qqumByzKtndZeT/zZ59ZqMtVM"
+        - name: date
+          value: Sat, 21 Feb 2026 13:47:45 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: json
+        data: |-
+          {
+            "statusCode": 500,
+            "message": "Mapping is not found for UserSystemDto and UserSystem",
+            "stark": "Error: Mapping is not found for UserSystemDto and UserSystem\n    at getMapping (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@automapper/core/index.cjs:107:11)\n    at Proxy.<anonymous> (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@automapper/core/index.cjs:580:27)\n    at UserSystemService.update (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/src/application/user-system/services/user-system.service.ts:93:32)\n    at UserSystemController.update (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/src/presentation/user-system/controllers/user-system.controller.ts:63:49)\n    at /media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/core/router/router-execution-context.js:38:29\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)",
+            "url": "/user-system/19c8a1e6-6fa6-4c87-86e7-0c0c1b6d46fa"
+          }

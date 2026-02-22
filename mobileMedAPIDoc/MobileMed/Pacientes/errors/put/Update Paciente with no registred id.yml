@@ -1,0 +1,72 @@
+info:
+  name: Update Paciente with no registred id
+  type: http
+  seq: 3
+
+http:
+  method: PUT
+  url: "{{BASE_URL}}/pacientes/{{$randomUUID}}"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "{{$randomFullName}}",
+        "document": "{{randomCpf}}"
+      }
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "400"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/pacientes/{{$randomUUID}}"
+      method: PUT
+      body:
+        type: json
+        data: |-
+          {
+            "name": "{{$randomFullName}}",
+            "document": "{{randomCpf}}"
+          }
+    response:
+      status: 500
+      statusText: Internal Server Error
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "1756"
+        - name: etag
+          value: W/"6dc-hGP01p/qsrEdeY9EyOi8h5MEFHY"
+        - name: date
+          value: Sat, 21 Feb 2026 14:11:17 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: json
+        data: |-
+          {
+            "statusCode": 500,
+            "message": "Could not find any entity of type \"Patient\" matching: {\n    \"where\": {\n        \"id\": \"1893c80b-9b46-40e5-b4d8-b5a0a5a9c7fd\"\n    }\n}",
+            "stark": "EntityNotFoundError: Could not find any entity of type \"Patient\" matching: {\n    \"where\": {\n        \"id\": \"1893c80b-9b46-40e5-b4d8-b5a0a5a9c7fd\"\n    }\n}\n    at <anonymous> (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1288:25)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async <anonymous> (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/src/infrastructure/database/patient/repositories/patient.repository.ts:76:23)\n    at async EntityManager.transaction (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:156:28)\n    at async PatientRepository.update (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/src/infrastructure/database/patient/repositories/patient.repository.ts:74:18)\n    at async PatientService.update (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/src/application/patient/services/patient.service.ts:74:20)\n    at async PatientController.update (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/src/presentation/patients/controllers/patient.controller.ts:68:20)",
+            "url": "/pacientes/1893c80b-9b46-40e5-b4d8-b5a0a5a9c7fd"
+          }

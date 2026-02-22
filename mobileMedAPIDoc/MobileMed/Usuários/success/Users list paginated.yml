@@ -1,0 +1,179 @@
+info:
+  name: Users list paginated
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{BASE_URL}}/user-system/paginated?page=1&pageSize=10"
+  params:
+    - name: page
+      value: "1"
+      type: query
+    - name: pageSize
+      value: "10"
+      type: query
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const body = res.getBody();
+
+        const otherUser = body.data.find(user => user.name.trim() !== "Samuel Bertoni");
+
+        if (otherUser) {
+          bru.setVar("otherUserId", otherUser.id);
+          console.log("ID capturado com sucesso: " + otherUser.id);
+        } else {
+          console.error("Nenhum usuário diferente de Samuel Bertoni foi encontrado.");
+        }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/user-system/paginated?page=1&pageSize=10"
+      method: GET
+      params:
+        - name: page
+          value: "1"
+          type: query
+        - name: pageSize
+          value: "10"
+          type: query
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "2926"
+        - name: etag
+          value: W/"b6e-jKDaoWAfBNCslvD7X1wHYndcoh8"
+        - name: date
+          value: Sat, 21 Feb 2026 13:37:04 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: json
+        data: |-
+          {
+            "statusCode": 200,
+            "message": "UsersSystem fetched successfully",
+            "data": [
+              {
+                "id": "9df17fbb-b518-48a4-9bd6-09640ed14c28",
+                "name": "Samuel Bertoni",
+                "email": "adm@gmail.com",
+                "status": 1,
+                "createdAt": "2026-02-19T18:11:01.493Z",
+                "createdBy": "System",
+                "updatedAt": "2026-02-19T18:11:01.537Z",
+                "updatedBy": "Seeder"
+              },
+              {
+                "id": "19c8a1e6-6fa6-4c87-86e7-0c0c1b6d46fa",
+                "name": "Alice Costa ",
+                "email": "user_testd60dd775-6e70-4b57-82f1-f73c0a576d8a_@mobilemed.com",
+                "status": 1,
+                "createdAt": "2026-02-21T00:59:07.226Z",
+                "createdBy": "PLAYWRIGHT LOGIN TEST ERRORS",
+                "updatedAt": "2026-02-21T00:59:07.226Z",
+                "updatedBy": "PLAYWRIGHT LOGIN TEST ERRORS"
+              },
+              {
+                "id": "8af2735c-9fe2-471e-9d04-912f13825cdd",
+                "name": "Fábio Santos ",
+                "email": "user_test74fdabba-00d7-4ac2-ab18-d35500b338b9_@mobilemed.com",
+                "status": 1,
+                "createdAt": "2026-02-21T00:59:07.264Z",
+                "createdBy": "PLAYWRIGHT LOGIN TEST ERRORS",
+                "updatedAt": "2026-02-21T00:59:07.264Z",
+                "updatedBy": "PLAYWRIGHT LOGIN TEST ERRORS"
+              },
+              {
+                "id": "de335772-a8b8-4f33-af6b-d821739422b2",
+                "name": "Aline Xavier ",
+                "email": "user_test634cbe75-236d-47e8-9bde-7e4de49089cf_@mobilemed.com",
+                "status": 1,
+                "createdAt": "2026-02-21T00:59:07.281Z",
+                "createdBy": "PLAYWRIGHT LOGIN TEST ERRORS",
+                "updatedAt": "2026-02-21T00:59:07.281Z",
+                "updatedBy": "PLAYWRIGHT LOGIN TEST ERRORS"
+              },
+              {
+                "id": "76c16dc0-935a-4770-8374-a92a277fce8f",
+                "name": "Deneval Braga ",
+                "email": "user_testba0943d4-ef91-4ec4-bf2c-6fd09cd4af76_@mobilemed.com",
+                "status": 1,
+                "createdAt": "2026-02-21T00:59:07.285Z",
+                "createdBy": "PLAYWRIGHT LOGIN TEST",
+                "updatedAt": "2026-02-21T00:59:07.285Z",
+                "updatedBy": "PLAYWRIGHT LOGIN TEST"
+              },
+              {
+                "id": "358ba92b-0c69-42ed-b185-98b2bc1097a7",
+                "name": "João Miguel Nogueira UI",
+                "email": "user_test11ff2528-983e-4474-8188-d77f13581fc2_ui@mobilemed.com",
+                "status": 1,
+                "createdAt": "2026-02-21T00:59:42.535Z",
+                "createdBy": "PLAYWRIGHT",
+                "updatedAt": "2026-02-21T00:59:42.535Z",
+                "updatedBy": "PLAYWRIGHT"
+              },
+              {
+                "id": "10980feb-3f30-4b96-98b6-e8cb29215dc5",
+                "name": "Manuela Costa UI",
+                "email": "user_test29bad389-a00f-4cad-b469-66b86c891149_ui@mobilemed.com",
+                "status": 1,
+                "createdAt": "2026-02-21T00:59:42.536Z",
+                "createdBy": "PLAYWRIGHT",
+                "updatedAt": "2026-02-21T00:59:42.536Z",
+                "updatedBy": "PLAYWRIGHT"
+              },
+              {
+                "id": "9fef4cd5-ee74-46bf-97bb-634740a3a688",
+                "name": "Sara Franco API",
+                "email": "user_test4cdd9b43-4971-4f65-aac6-50d20ac864e0_api@mobilemed.com",
+                "status": 1,
+                "createdAt": "2026-02-21T00:59:42.594Z",
+                "createdBy": "PLAYWRIGHT",
+                "updatedAt": "2026-02-21T00:59:42.594Z",
+                "updatedBy": "PLAYWRIGHT"
+              },
+              {
+                "id": "477e1d8b-6b39-4b07-8f1c-7d353ddb5529",
+                "name": "Srta. Isaac Moraes API",
+                "email": "user_teste8a9ddc2-1720-40d8-bc13-d0d22dfd2467_api@mobilemed.com",
+                "status": 1,
+                "createdAt": "2026-02-21T00:59:42.595Z",
+                "createdBy": "PLAYWRIGHT",
+                "updatedAt": "2026-02-21T00:59:42.595Z",
+                "updatedBy": "PLAYWRIGHT"
+              }
+            ],
+            "occurrenceData": "Sat Feb 21 2026 10:37:04 GMT-0300 (Horário Padrão de Brasília)",
+            "url": "http://localhost:3000/user-system/paginated?page=1&pageSize=10",
+            "pagination": {
+              "totalItems": 9,
+              "totalPages": 1,
+              "currentPage": 1,
+              "pageSize": 10
+            }
+          }

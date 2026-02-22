@@ -1,0 +1,42 @@
+info:
+  name: Pacientes
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit
+  scripts:
+    - type: before-request
+      code: |-
+        // Função para gerar um número aleatório
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        // Função para calcular os dígitos verificadores do CPF
+        function generateCPF() {
+            let n = 9; // 9 primeiros dígitos
+            let n1 = randomInt(0, 9);
+            let n2 = randomInt(0, 9);
+            let n3 = randomInt(0, 9);
+            let n4 = randomInt(0, 9);
+            let n5 = randomInt(0, 9);
+            let n6 = randomInt(0, 9);
+            let n7 = randomInt(0, 9);
+            let n8 = randomInt(0, 9);
+            let n9 = randomInt(0, 9);
+
+            let d1 = n1 * 10 + n2 * 9 + n3 * 8 + n4 * 7 + n5 * 6 + n6 * 5 + n7 * 4 + n8 * 3 + n9 * 2;
+            d1 = 11 - (d1 % 11);
+            if (d1 >= 10) d1 = 0;
+
+            let d2 = d1 * 2 + n1 * 11 + n2 * 10 + n3 * 9 + n4 * 8 + n5 * 7 + n6 * 6 + n7 * 5 + n8 * 4 + n9 * 3;
+            d2 = 11 - (d2 % 11);
+            if (d2 >= 10) d2 = 0;
+
+            return "" + n1 + n2 + n3 + n4 + n5 + n6 + n7 + n8 + n9 + d1 + d2;
+        }
+
+        // Gera o CPF e define como uma variável de ambiente/variável temporária
+        const cpf = generateCPF();
+        bru.setVar("randomCpf", cpf);

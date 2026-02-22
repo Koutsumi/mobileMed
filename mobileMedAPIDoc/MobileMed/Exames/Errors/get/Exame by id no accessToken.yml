@@ -1,0 +1,55 @@
+info:
+  name: Exame by id no accessToken
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{BASE_URL}}/exames/{{exameId}}"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "401"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/exames/{{exameId}}"
+      method: GET
+    response:
+      status: 404
+      statusText: Not Found
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "2268"
+        - name: etag
+          value: W/"8dc-KEuMhiixBf8mObgrIZyj8MXURsY"
+        - name: date
+          value: Sat, 21 Feb 2026 14:58:13 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: json
+        data: |-
+          {
+            "statusCode": 404,
+            "message": "Cannot GET /exames/%7B%22name%22:%22TypeError%22,%22message%22:%22cannot%20read%20property%20'0'%20of%20undefined%22,%22stack%22:%22%20%20%20%20at%20%3Ceval%3E%20(eval.js)/n%22%7D",
+            "stark": "NotFoundException: Cannot GET /exames/%7B%22name%22:%22TypeError%22,%22message%22:%22cannot%20read%20property%20'0'%20of%20undefined%22,%22stack%22:%22%20%20%20%20at%20%3Ceval%3E%20(eval.js)/n%22%7D\n    at callback (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/core/router/routes-resolver.js:77:19)\n    at /media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/@nestjs/core/router/router-proxy.js:9:23\n    at Layer.handle [as handle_request] (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/express/lib/router/layer.js:95:5)\n    at trim_prefix (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/express/lib/router/index.js:328:13)\n    at /media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/express/lib/router/index.js:286:9\n    at router.process_params (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/express/lib/router/index.js:346:12)\n    at next (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/node_modules/express/lib/router/index.js:280:10)\n    at AsyncLocalStorage.run (node:internal/async_local_storage/async_context_frame:63:14)\n    at ContextAccess.run (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/src/middleware/context/context.access.ts:12:21)\n    at ContextMiddleware.use (/media/fernanda-baccarini/f1463280-7912-4d5b-8cb0-98f8633289d3/Projects/desafio-tecnico-QA-III/backend/src/middleware/context/context.middleware.ts:8:19)",
+            "url": "/exames/%7B%22name%22:%22TypeError%22,%22message%22:%22cannot%20read%20property%20'0'%20of%20undefined%22,%22stack%22:%22%20%20%20%20at%20%3Ceval%3E%20(eval.js)/n%22%7D"
+          }

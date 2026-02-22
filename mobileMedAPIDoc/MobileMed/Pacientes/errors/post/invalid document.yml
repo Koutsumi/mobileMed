@@ -1,0 +1,49 @@
+info:
+  name: invalid document
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{BASE_URL}}/pacientes/"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "{{$randomFullName}}",
+        "document": "00000000001"
+      }
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+runtime:
+  scripts:
+    - type: before-request
+      code: |-
+        // Obtém a data atual no formato ISO (YYYY-MM-DD)
+        const currentDate = new Date().toISOString().split('T')[0];
+
+        // Define uma variável chamada 'dataHoje' que pode ser usada na requisição
+        bru.setVar("currentDate", currentDate);
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "400"
+  actions:
+    - type: set-variable
+      phase: after-response
+      selector:
+        expression: res.body.id
+        method: jsonq
+      variable:
+        name: pacienteId
+        scope: runtime
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+docs: Requisição sem validação do número do CPF.

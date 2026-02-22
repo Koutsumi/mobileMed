@@ -1,0 +1,72 @@
+info:
+  name: Update Paciente
+  type: http
+  seq: 1
+
+http:
+  method: PUT
+  url: "{{BASE_URL}}/pacientes/{{pacienteId}}"
+  body:
+    type: json
+    data: |-
+      {
+        "id": "{{pacienteId}}",
+        "name": "{{$randomFullName}}",
+        "document": "{{randomCpf}}"
+      }
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: example
+    request:
+      url: "{{BASE_URL}}/pacientes/{{pacienteId}}"
+      method: PUT
+      body:
+        type: json
+        data: |-
+          {
+            "id": "{{pacienteId}}",
+            "name": "{{$randomFullName}}",
+            "document": "{{randomCpf}}"
+          }
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: x-powered-by
+          value: Express
+        - name: access-control-allow-origin
+          value: "*"
+        - name: content-type
+          value: application/json; charset=utf-8
+        - name: content-length
+          value: "238"
+        - name: etag
+          value: W/"ee-ZZp8p6XyG9BgogW3rSoTsapi/jE"
+        - name: date
+          value: Sat, 21 Feb 2026 13:24:24 GMT
+        - name: connection
+          value: keep-alive
+        - name: keep-alive
+          value: timeout=5
+      body:
+        type: json
+        data: |-
+          {
+            "id": "794a089f-f104-4d08-9d96-62b2bc1b0325",
+            "name": "Mathew Lang",
+            "document": "56547869466",
+            "exams": [],
+            "createdAt": "2026-02-21T13:22:14.890Z",
+            "createdBy": "Samuel Bertoni",
+            "updatedAt": "2026-02-21T13:24:24.139Z",
+            "updatedBy": "Samuel Bertoni"
+          }
