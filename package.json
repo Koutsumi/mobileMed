@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "doc:generate": "compodoc -p tsconfig.json -d documentation --name \"Playwright Test Project\" --includes . --includesName \"QA Report\"",
+    "doc:generate": "compodoc -p tsconfig.json -d documentation --name \"Playwright Test Project\" --includes . --includesName \"Additional Docs\"",
     "doc:deploy": "npm run doc:generate && gh-pages -d documentation"
   },
   "keywords": [],

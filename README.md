@@ -48,7 +48,6 @@ playwright/
 │   ├── api/                  # Testes de API
 │   └── e2e/                  # Testes E2E
 ├── rules/                    # Convenções de código e testes
-├── QA_REPORT.md              # Bugs/inconsistências mapeadas
 └── playwright.config.ts
 ```
 
@@ -159,7 +158,6 @@ npx playwright show-report
 
 ## Documentação QA
 
-- `QA_REPORT.md`: defeitos conhecidos de API e E2E
 - `SHARED_GLOBALS.md`: guia dos helpers globais
 
 Gerar documentação Compodoc:

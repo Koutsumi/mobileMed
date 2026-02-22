@@ -97,77 +97,138 @@
                    <div class="content-data">
 
 
-<h1>Playwright Test Project</h1>
-<h2>Objetivo</h2>
-<p>Este projeto valida contratos e comportamentos do sistema MobileMed em dois níveis:</p>
+<h1>MobileMed QA - Playwright</h1>
+<p><a href="https://koutsumi.github.io/mobileMed/"><img src="https://img.shields.io/badge/docs-online-brightgreen" alt="Docs" class="img-responsive"></a></p>
+<p>Suite de testes automatizados do projeto <strong>MobileMed</strong>, cobrindo:</p>
 <ul>
-<li>API: cenários de sucesso, erro e regressão funcional.</li>
-<li>E2E: fluxos críticos de UI com pré-condições via API/DB.</li>
+<li><strong>API tests</strong> (contrato, regressão, cenários de erro)</li>
+<li><strong>E2E tests</strong> (fluxos críticos de interface com Page Objects)</li>
 </ul>
-<h2>Estratégia de Testes</h2>
-<h3>1. Independência total entre testes</h3>
+<hr>
+<h2>Visão Geral</h2>
+<p>Este projeto foi estruturado para garantir:</p>
 <ul>
-<li>Nenhum teste deve depender de outro.</li>
-<li>Pré-requisitos de dados são criados no próprio teste.</li>
-<li>Sempre que possível, pré-requisitos são inseridos via banco de dados (helpers em <code>shared/helpers/db</code>) para evitar acoplamento entre rotas.</li>
+<li><strong>Independência total entre testes</strong></li>
+<li><strong>Pré-condições determinísticas</strong> via API/DB</li>
+<li><strong>Limpeza de massa no início das suítes</strong></li>
+<li><strong>Rastreabilidade de falhas</strong> com relatório HTML</li>
+</ul>
+<hr>
+<h2>Stack</h2>
+<ul>
+<li><code>@playwright/test</code></li>
+<li><code>pg</code> (helpers de banco)</li>
+<li><code>dotenv</code></li>
+<li><code>@faker-js/faker</code></li>
+<li><code>uuid</code></li>
+</ul>
+<hr>
+<h2>Estrutura de Pastas</h2>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-text">playwright/
+├── fixtures/                 # Massa randômica/reutilizável
+├── modules/                  # Clients por domínio + page objects
+│   ├── auth/
+│   ├── paciente/
+│   │   └── page/
+│   ├── exame/
+│   │   └── page/
+│   └── usersystem/
+├── shared/                   # DB, helpers globais, utilitários
+├── tests/
+│   ├── auth.setup.ts         # Setup global de autenticação
+│   ├── api/                  # Testes de API
+│   └── e2e/                  # Testes E2E
+├── rules/                    # Convenções de código e testes
+└── playwright.config.ts</code></pre></div><hr>
+<h2>Estratégia de Testes</h2>
+<h3>1. Independência</h3>
+<ul>
+<li>Um teste <strong>não depende</strong> de outro.</li>
+<li>Toda pré-condição é criada no próprio teste (API/DB).</li>
 </ul>
 <h3>2. Higiene de dados</h3>
 <ul>
-<li>A limpeza de massa ocorre no início das suítes por módulo (<code>*.setup.ts</code>).</li>
-<li>Os registros criados durante execução podem ser mantidos para auditoria/diagnóstico.</li>
-<li>Não usar limpeza no <code>finally</code> como estratégia padrão.</li>
+<li>Limpeza ocorre em <code>*.setup.ts</code> por módulo.</li>
+<li>Limpeza é feita <strong>no início da suíte</strong>.</li>
+<li>Massa pode permanecer ao final para auditoria.</li>
 </ul>
-<h3>3. Estrutura de suíte</h3>
+<h3>3. Padrão E2E</h3>
 <ul>
-<li>Cada arquivo começa com <code>test.describe()</code> representando endpoint/feature.</li>
-<li>O nome do describe contém método HTTP e rota.</li>
-<li>Cada <code>test()</code> valida um único comportamento.</li>
-<li>Nomenclatura dos testes segue <code>Should ...</code>.</li>
+<li>Page Objects em <code>modules/*/page</code>.</li>
+<li>Seletores priorizam atributos semânticos e texto confiável.</li>
+<li>Sempre validar:<ul>
+<li>marcador da tela correta</li>
+<li>feedback de erro/sucesso</li>
 </ul>
-<h3>4. Sessão/autenticação</h3>
-<ul>
-<li>Sessões de autenticação ficam na pasta <code>.auth</code>.</li>
-<li>Setup de autenticação é executado antes das suítes dependentes.</li>
+</li>
 </ul>
-<h3>5. Estratégia E2E</h3>
+<h3>4. Padrão API</h3>
 <ul>
-<li>Os testes E2E ficam em <code>tests/e2e/</code>.</li>
-<li>Page Objects ficam em <code>modules/*/page/</code>.</li>
-<li>Pré-condições de dados devem ser criadas por API/DB, sem depender de fluxo UI prévio.</li>
-<li>Navegação e ações na tabela devem ser determinísticas, evitando locators frágeis.</li>
-<li>Toda suíte E2E possui setup próprio (<code>*.setup.ts</code>) com limpeza de massa no início.</li>
-<li>A limpeza ocorre no início da suíte e não ao final, preservando rastreabilidade da execução.</li>
+<li>Cada <code>describe</code> representa endpoint/feature.</li>
+<li>Nome inclui método HTTP e rota.</li>
+<li>Cada teste valida um comportamento único.</li>
 </ul>
-<h2>Padrões de Codificação</h2>
-<h3>Regras gerais</h3>
+<hr>
+<h2>Pré-requisitos</h2>
 <ul>
-<li>Fluxo de execução explícito, linear e legível.</li>
-<li>Reduzir aninhamentos com guard clauses.</li>
-<li>Evitar <code>else</code> e operadores ternários para melhorar clareza.</li>
-<li>Separar blocos lógicos com linhas em branco.</li>
+<li>Node.js 18+</li>
+<li>Banco PostgreSQL da aplicação disponível</li>
+<li>Backend e frontend acessíveis</li>
 </ul>
-<h3>Padrões para testes</h3>
+<p>Variáveis esperadas em <code>playwright/.env</code>:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-env">BASE_API_URL=&quot;http://localhost:3000&quot;
+BASE_WEB_URL=&quot;http://localhost:4200&quot;
+DATABASE_URL=&quot;postgresql://...&quot;</code></pre></div><hr>
+<h2>Instalação</h2>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">cd playwright
+npm install</code></pre></div><hr>
+<h2>Execução</h2>
+<h3>Listar testes</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">npx playwright test --list</code></pre></div><h3>Rodar tudo</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">npx playwright test</code></pre></div><h3>Rodar apenas API</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">npx playwright test --project=api-login --project=api-usersystem --project=api-pacientes --project=api-exames --project=api-post</code></pre></div><h3>Rodar apenas E2E</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">npx playwright test --project=e2e-login --project=e2e-patients --project=e2e-exams</code></pre></div><h3>Rodar um arquivo específico</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">npx playwright test tests/e2e/exams/exams.spec.ts --project=e2e-exams</code></pre></div><hr>
+<h2>Relatórios</h2>
+<p>Após execução:</p>
 <ul>
-<li>Evitar lógica complexa no corpo do teste.</li>
-<li>Reutilizar módulos em <code>modules/*</code> para chamadas HTTP.</li>
-<li>Reutilizar helpers de banco em <code>shared/helpers/db/*</code> para setup de pré-condições.</li>
-<li>Validar status code e payload mínimo necessário para contrato.</li>
-<li>Em E2E, sempre validar marcador de tela correta e mensagens de erro/sucesso.</li>
+<li>Relatório Playwright HTML em <code>playwright-report/</code></li>
+<li>Resultados em <code>test-results/</code></li>
 </ul>
-<h2>Estrutura de Pastas</h2>
+<p>Abrir relatório:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">npx playwright show-report</code></pre></div><hr>
+<h2>Documentação QA</h2>
 <ul>
-<li><code>tests/</code>: specs e setups de teste.</li>
-<li><code>modules/</code>: clients por domínio (<code>auth</code>, <code>exame</code>, <code>paciente</code>, <code>usersystem</code>) e Page Objects em <code>modules/*/page/</code>.</li>
-<li><code>fixtures/</code>: geradores de payload.</li>
-<li><code>shared/</code>: utilitários globais, conexão DB e helpers.</li>
-<li><code>mobileMedAPIDoc/</code>: documentação de referência de endpoints.</li>
-<li><code>rules/</code>: convenções e diretrizes do projeto.</li>
+<li><code>SHARED_GLOBALS.md</code>: guia dos helpers globais</li>
 </ul>
-<h2>Documentação adicional no Compodoc</h2>
+<p>Gerar documentação Compodoc:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">npm run doc:generate</code></pre></div><hr>
+<h2>Troubleshooting Rápido</h2>
+<h3>Teste não encontra dados recém-criados</h3>
 <ul>
-<li><code>README.md</code>: visão geral e estratégia.</li>
-<li><code>SHARED_GLOBALS.md</code>: documentação das funções globais em <code>shared</code>.</li>
-<li><code>QA_REPORT.md</code>: reporte de bugs e inconsistências conhecidas.</li>
+<li>Confirmar setup de limpeza do módulo</li>
+<li>Confirmar <code>createdBy</code> alinhado com filtros de limpeza</li>
+<li>Validar pré-condição via helper de DB antes da ação UI</li>
+</ul>
+<h3>Erro de locator em snackbar (strict mode)</h3>
+<ul>
+<li>Usar locator por tipo (<code>custom-success-snackbar</code> / <code>custom-error-snackbar</code>)</li>
+<li>Evitar locator genérico quando há múltiplos snackbars</li>
+</ul>
+<h3>Flakiness com paginação</h3>
+<ul>
+<li>Navegar por páginas de forma determinística</li>
+<li>Usar texto de range do paginator para validar avanço real</li>
+</ul>
+<hr>
+<h2>Convenções</h2>
+<p>As regras obrigatórias do repositório estão em <code>rules/</code>.</p>
+<p>Destaques:</p>
+<ul>
+<li>Fluxo explícito e legível</li>
+<li>Evitar complexidade no corpo dos testes</li>
+<li>Nomenclatura semântica e consistente</li>
+<li>Reuso de helpers e isolamento de responsabilidades</li>
 </ul>
 
 
