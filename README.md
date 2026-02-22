@@ -1,5 +1,7 @@
 # MobileMed QA - Playwright
 
+[![Docs](https://img.shields.io/badge/docs-online-brightgreen)](https://koutsumi.github.io/mobileMed/)
+
 Suite de testes automatizados do projeto **MobileMed**, cobrindo:
 
 - **API tests** (contrato, regressão, cenários de erro)
