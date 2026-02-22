@@ -158,6 +158,7 @@ npx playwright show-report
 
 ## Documentação QA
 
+- `QA_REPORT.md`: defeitos conhecidos de API e E2E
 - `SHARED_GLOBALS.md`: guia dos helpers globais
 
 Gerar documentação Compodoc:

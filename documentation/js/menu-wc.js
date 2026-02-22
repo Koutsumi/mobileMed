@@ -59,6 +59,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     <li class="link ">
                                         <a href="additional-documentation/shared-globals.html" data-type="entity-link" data-context-id="additional">Shared Globals</a>
                                     </li>
+                                    <li class="link ">
+                                        <a href="additional-documentation/qa-report.html" data-type="entity-link" data-context-id="additional">QA Report</a>
+                                    </li>
                         </ul>
                     </li>
                     <li class="chapter">
