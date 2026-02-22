@@ -52,7 +52,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#additional-pages"'
                             : 'data-bs-target="#xs-additional-pages"' }>
                             <span class="icon ion-ios-book"></span>
-                            <span>Additional Docs</span>
+                            <span>Reports</span>
                             <span class="icon ion-ios-arrow-down"></span>
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? 'id="additional-pages"' : 'id="xs-additional-pages"' }>
